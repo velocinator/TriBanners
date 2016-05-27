@@ -23,7 +23,7 @@ var sprite = new Sprite('assets/animations/spritesheet.png', {
     sprite.startLoop();
   }
 });
-function PollSubscribers(){
+function pollSubscribers(){
     var currDT = new Date();
     var currDTJ = currDT.toJSON();
     var JSONRequest = new XMLHttpRequest();
@@ -38,7 +38,7 @@ function PollSubscribers(){
                     //console.log(localStorage.getItem('prevJSON'));
                     if(localStorage.getItem('prevJSON') !== string){
                         console.log("New Sub!");
-                        OperateBanner("sub",0,parse.follows[0].user.display_name);
+                        operateBanner("sub",0,parse.follows[0].user.display_name);
                         localStorage.setItem('prevJSON', string);
                     }else{
                         console.log("No new subs... let's try again.");
@@ -56,17 +56,17 @@ function PollSubscribers(){
             JSONRequest = null;
 }
 
-function PollDonations(){
+function pollDonations(){
     
 }
 //the main function
 function main(){
-    setInterval(PollSubscribers, 1000);
+    setInterval(pollSubscribers, 1000);
 }
 
 
 //manages what banner to show/what sound to play
-function OperateBanner(style,dickSize,homie){
+function operateBanner(style,dickSize,homie){
     if(style === "sub"){
         drawYosh();
         //if it's a new subscriber...
@@ -176,7 +176,7 @@ function drawDonationText(homie,dickSize){
     mainContext.fillStyle = 'black';
     mainContext.fillText(homie, 300, 120);
 }
-function HomieAnimate(time){
+function homieAnimate(time){
     
 }
 function destroyCanvasElements (){
