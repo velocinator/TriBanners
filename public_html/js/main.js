@@ -13,12 +13,21 @@ var requestAnimationFrame = window.requestAnimationFrame ||
                             window.mozRequestAnimationFrame || 
                             window.webkitRequestAnimationFrame || 
                             window.msRequestAnimationFrame;
-
+var sprite = new Sprite('assets/animations/spritesheet.png', {
+  frameW: 404,
+  frameH: 537,
+  projectedW: 150,
+  projectedH: 200,
+  postInitCallback: function() { // Runs when the sprite is ready.
+    // Start animating.
+    sprite.startLoop();
+  }
+});
 function PollSubscribers(){
     var currDT = new Date();
     var currDTJ = currDT.toJSON();
     var JSONRequest = new XMLHttpRequest();
-    JSONRequest.open('GET', 'https://api.twitch.tv/kraken/channels/trihex/follows?offset=0&api_version=3', true);
+    JSONRequest.open('GET', 'https://api.twitch.tv/kraken/channels/velocinator/follows?offset=0&api_version=3', true);
     JSONRequest.onreadystatechange = function(){
         if (this.readyState === 4) {
             if (this.status >= 200 && this.status < 400) {
@@ -38,21 +47,6 @@ function PollSubscribers(){
                     //interesting... prevJSON's localStorage hasn't been set. time to set it!
                     localStorage.setItem('prevJSON', string);
                 }
-                
-                //tfw peeves spoonfeeding code to me because I'm only good at PHP
-                //console.log("let the spoonfeeding begin!");
-                /*var subArray = [];
-                for (var index = 0; index < subArray.length; ++index){
-                     if ((Date.now() - Date.parse(parse.follows[index].created_at).getTime()) < 5000 && subArray.indexOf(parse.follows[index].user._id) === -1){
-                          OperateBanner("sub",0,parse.follows[index].user.display_name);
-                         subArray.push(parse.follows[index].user._id);
-                         if(subArray.length > 10){
-                             subArray.shift();
-                         }
-                     }else{
-                         console.log("dun goofed");
-                     }
-                }*/
                 } else {
                     // Error :(
                     }
@@ -78,10 +72,12 @@ function OperateBanner(style,dickSize,homie){
         //if it's a new subscriber...
         if(dickSize === 0){
         drawWelcomeSubText(homie);
+        //if(!debug){
         var subAudio = document.createElement('audio');
         subAudio.setAttribute('src', 'assets/songs/subsong.ogg');
         subAudio.play();
         subAudio.addEventListener('ended', destroyCanvasElements);
+        //}
     }else{
         //huh... the Dicksize is greater than 0... must be a resub!
         drawReSubText(homie, dickSize);
@@ -109,7 +105,7 @@ function OperateBanner(style,dickSize,homie){
         console.log("You recieved a donation, but it's less than the minimum value of 4.20...");
     }
 }else{
-    if(debug != 1){
+    if(debug !== 1){
     alert("YOU SOMEHOW BROKE IT!!! CONTACT VELOCINATOR");
     }
 }
@@ -134,7 +130,8 @@ function drawYosh(){
     mainContext.fill();
     
     mainContext.font="20px Georgia";
-    //requestAnimationFrame(drawBanner);
+
+    sprite.draw(mainContext, 35, 0);
 }
 
 function drawWelcomeSubText(homie){
@@ -186,5 +183,3 @@ function destroyCanvasElements (){
     mainContext.clearRect(0,0, canvasWidth, canvasHeight);
 }
 main();
-//OperateBanner("donate",4.22,"velocinator");
-//PollSubscribers();

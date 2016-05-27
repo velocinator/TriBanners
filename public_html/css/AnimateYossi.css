@@ -1,0 +1,24 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Apr 27, 2016, 6:33:26 PM
+    Author     : Velocinator
+*/
+
+.frame { 
+ background-color: transparent;
+ background-image: url(spritesheet.png);
+ background-repeat: no-repeat;
+ width: 404px;  }
+.frame-0 { background-position: 0 0; }
+.frame-1 { background-position: -808px 0; } 
+.frame-2 { background-position: -1212px 0; } 
+.frame-3 { background-position: -1616px 0; } 
+.frame-4 { background-position: -2020px 0; } 
+.frame-5 { background-position: -2424px 0; } 
+.frame-6 { background-position: -2828px 0; } 
+.frame-7 { background-position: -3232px 0; } 
+
